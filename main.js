@@ -8,7 +8,7 @@ let total = document.getElementById("total");
 let submit = document.getElementById("submit");
 let count = document.getElementById("count");
 let category = document.getElementById("category");
-let mood = "create";
+let mode = "create";
 let tmp;
 // console.log(title, price,taxes,ads,discount,total,submit,count,category)
 function gettotal() {
@@ -29,6 +29,7 @@ if (localStorage.product != null) {
 } else {
   datapro = [];
 }
+// submit
 submit.onclick = function () {
   let newpro = {
     title: title.value,
@@ -42,7 +43,7 @@ submit.onclick = function () {
   };
   // clean data
 
-  if (mood === "create") {
+  if (mode === "create") {
     if (newpro.count > 1) {
       for (let i = 1; i <= newpro.count; i++) {
         datapro.push(newpro);
@@ -129,10 +130,11 @@ function deletedata(i) {
 }
 // delete all
 function deleteall() {
+ 
   localStorage.clear();
-  datapro.splice(0);
-  showdata();
-  
+  document.getElementById("table").innerHTML = "";
+   document.getElementById("deleteall").innerHTML="";
+
 }
 
 function updatedata(i) {
@@ -144,7 +146,7 @@ function updatedata(i) {
   category.value = datapro[i].category;
   count.style.display = "none";
   submit.innerHTML = "update";
-  mood = "update";
+  mode = "update";
   tmp = i;
   scroll({ top: 0, behavior: "smooth" });
   gettotal();
@@ -152,15 +154,16 @@ function updatedata(i) {
 
 //  search
 
-let searchmood = "title";
+let searchmode = "title";
 
-function getsearchmood(id) {
+function getsearchmode(id) {
   let search = document.getElementById("search");
   if (id == "searchtitle") {
-    searchmood = "title";
+    searchmode = "title";
     search.placeholder = "search by title";
+    console.log(id)
   } else {
-    searchmood = "category";
+    searchmode = "category";
     search.placeholder = "search by category";
   }
   search.focus();
@@ -181,7 +184,7 @@ function searchdata(value) {
 
     </tr>
    </thead>`;
-  if ((searchmood = "title")) {
+  if ((searchmode = "title")) {
     for (let i = 0; i < datapro.length; i++) {
       if (datapro[i].title.includes(value)) {
         {
